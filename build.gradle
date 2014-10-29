@@ -1,0 +1,23 @@
+subprojects {
+    apply plugin: 'java'
+    group = 'ru.virvar.apps.magneticBallLogic'
+    version = '0.1'
+}
+
+project(':MagneticBallLogic') {
+    dependencies {
+        compile project (':MagneticBallCore')
+    }
+}
+
+project(':MagneticBallDrawing') {
+    dependencies {
+        compile project (':MagneticBallCore'), project (':MagneticBallLogic')
+    }
+}
+
+project(':MagneticBall2App') {
+    dependencies {
+        compile project (':MagneticBallCore'), project (':MagneticBallDrawing'), project (':MagneticBallLogic')
+    }
+}

@@ -1,0 +1,9 @@
+rootProject.name = 'MagneticBall2'
+
+include 'MagneticBallCore'
+
+include 'MagneticBallLogic'
+
+include 'MagneticBallDrawing'
+
+include 'MagneticBall2App'
