@@ -16,3 +16,7 @@ repositories {
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:0.9.66'
 }
+
+apply plugin: 'application'
+
+mainClassName = "ru.virvar.apps.magneticBall2App.Main.MainPackage"

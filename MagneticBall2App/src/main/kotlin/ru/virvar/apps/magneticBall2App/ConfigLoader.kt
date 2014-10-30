@@ -19,16 +19,22 @@ import ru.virvar.apps.magneticBallDrawing.SimplePallet
 import ru.virvar.apps.magneticBallDrawing.FixedFieldDrawer
 import ru.virvar.apps.magneticBallDrawing.FixedPlayerDrawer
 
-public class ConfigLoader  (fileName: String) {
+public class ConfigLoader  (configName: String) {
     val props: Properties
 
     {
         val appProps = Properties()
+        val fileName = getResourceFile(configName)
         with (FileInputStream(fileName)) {
             appProps.load(this)
             close()
         }
         props = appProps
+    }
+
+    fun getResourceFile(resourceName: String): String {
+        val classLoader = javaClass.getClassLoader()!!
+        return classLoader.getResource(resourceName)!!.getFile()!!
     }
 
     public fun readProperties(): GameConfig {
@@ -41,7 +47,7 @@ public class ConfigLoader  (fileName: String) {
     }
 
     fun getLevelGenerator(): ILevelGenerator {
-        val levelFileName = props.getProperty("levelFileName")!!
+        val levelFileName = getResourceFile(props.getProperty("level")!!)
         val moveBehavior = when (props.getProperty("moveBehavior")) {
             "Pacman" -> PacmanMoveBehavior()
             "Simple" -> SimpleMoveBehavior()
