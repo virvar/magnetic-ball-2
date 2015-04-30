@@ -8,6 +8,20 @@ Orbox like game.
 Game purpose: Enter into a portal, setting the direction of a ball.
 The ball flies while doesn't meet an obstacle.
 
+Screenshots
+-----------
+
+![](/screenshots/mb1-1.png)
+
+After pressing 'left' key:
+
+![](/screenshots/mb1-2.png)
+
+Another 'mode', when player position is fixed:
+
+![](/screenshots/mb2-1.png)
+![](/screenshots/mb2-2.png)
+
 Installation and running
 ------------------------
 $ gradlew run
