@@ -2,13 +2,13 @@
 
 import ru.virvar.apps.magneticBallCore.*
 
-public class PortalBlock(groupId: Char) : ActiveBlock() {
-    public val groupId: Char
-    public var portalEnd: PortalBlock? = null
+class PortalBlock(groupId: Char) : ActiveBlock() {
+    val groupId: Char
+    var portalEnd: PortalBlock? = null
 
-    {
+    init {
         if (groupId >= 'a' && groupId <= 'z') {
-            $groupId = groupId
+            this.groupId = groupId
         } else {
             throw Exception("groupId must be between 'a' and 'z'.")
         }
@@ -27,7 +27,7 @@ public class PortalBlock(groupId: Char) : ActiveBlock() {
     }
 
     override fun initFrom(original: Block) {
-        super<ActiveBlock>.initFrom(original)
+        super.initFrom(original)
         if (original !is PortalBlock) {
             throw TypeCastException("Original must be PortalBlock")
         }

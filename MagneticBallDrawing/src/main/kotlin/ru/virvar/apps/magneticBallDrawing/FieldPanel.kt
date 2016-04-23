@@ -1,19 +1,20 @@
 package ru.virvar.apps.magneticBallDrawing
 
-import javax.swing.JPanel
+import ru.virvar.apps.magneticBallCore.Block
+import ru.virvar.apps.magneticBallCore.Point2D
 import java.awt.Graphics
-import ru.virvar.apps.magneticBallCore.*
+import javax.swing.JPanel
 
-public abstract class FieldPanel(val drawer: Drawer) : JPanel() {
+abstract class FieldPanel(val drawer: Drawer) : JPanel() {
     protected abstract val fieldSize: Point2D
     protected abstract val blocks: List<Block>
 
-    {
-        setDoubleBuffered(true)
+    init {
+        isDoubleBuffered = true
     }
 
     override fun paint(g: Graphics) {
-        super<JPanel>.paint(g)
-        drawer.draw(g, getWidth(), getHeight(), fieldSize, blocks)
+        super.paint(g)
+        drawer.draw(g, width, height, fieldSize, blocks)
     }
 }

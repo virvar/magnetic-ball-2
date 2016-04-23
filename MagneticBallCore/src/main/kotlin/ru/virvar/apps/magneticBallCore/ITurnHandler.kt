@@ -1,5 +1,5 @@
 package ru.virvar.apps.magneticBallCore
 
-public trait ITurnHandler {
+interface ITurnHandler {
     fun turn(level: Level, direction: Point2D)
 }

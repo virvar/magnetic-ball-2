@@ -3,7 +3,7 @@
 import ru.virvar.apps.magneticBallCore.IBlocksGenerator
 import ru.virvar.apps.magneticBallCore.Level
 
-public class EmptyBlocksGenerator : IBlocksGenerator {
+class EmptyBlocksGenerator : IBlocksGenerator {
     override fun generateInitialBlocks(level: Level) {
         // generate no blocks
     }

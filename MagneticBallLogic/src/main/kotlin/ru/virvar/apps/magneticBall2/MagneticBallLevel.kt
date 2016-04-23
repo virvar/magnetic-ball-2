@@ -6,5 +6,5 @@ import kotlin.properties.Delegates
 
 class MagneticBallLevel (fieldSize: Int, moveBehavior: IMoveBehavior)
 : Level(fieldSize, moveBehavior, SmoothMoving()) {
-    public var player: Block by Delegates.notNull()
+    var player: Block by Delegates.notNull()
 }

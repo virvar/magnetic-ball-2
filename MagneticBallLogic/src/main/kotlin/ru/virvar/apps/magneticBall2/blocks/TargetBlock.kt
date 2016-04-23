@@ -2,7 +2,7 @@
 
 import ru.virvar.apps.magneticBallCore.*
 
-public class TargetBlock : ActiveBlock() {
+class TargetBlock : ActiveBlock() {
     override fun blockEnter(level: Level, block: Block, direction: Point2D): Point2D {
         level.moveHelper.move(level, block, direction, location)
         level.gameState = GameState.WIN
@@ -16,7 +16,7 @@ public class TargetBlock : ActiveBlock() {
     }
 
     override fun initFrom(original: Block) {
-        super<ActiveBlock>.initFrom(original)
+        super.initFrom(original)
         if (original !is TargetBlock) {
             throw TypeCastException("Original must be TargetBlock")
         }

@@ -1,29 +1,26 @@
 package ru.virvar.apps.magneticBallCore
 
-public abstract class Block {
-    private class object {
-        var currentId = 1
-    }
-
-    public var id: Int
+private var currentBlockId: Int = 1
+abstract class Block {
+    var id: Int
         private set
-    public var location: Point2D = Point2D(0, 0)
-    public var x: Int
+    var location: Point2D = Point2D(0, 0)
+    var x: Int
         get() = location.x
         set(value){
             location.x = value
         }
-    public var y: Int
+    var y: Int
         get() = location.y
         set(value){
             location.y = value
         }
 
-    {
-        $id = Block.currentId++
+    init {
+        id = currentBlockId++
     }
 
-    public abstract fun clone(): Block
+    abstract fun clone(): Block
 
     protected open fun initFrom(original: ru.virvar.apps.magneticBallCore.Block) {
         id = original.id

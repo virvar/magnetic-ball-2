@@ -7,8 +7,8 @@ import ru.virvar.apps.magneticBallCore.Game
 import java.util.ArrayList
 import ru.virvar.apps.magneticBallDrawing.Drawer
 
-public class GamePanel(drawer: Drawer) : FieldPanel(drawer) {
-    public var game: Game? = null
+class GamePanel(drawer: Drawer) : FieldPanel(drawer) {
+    var game: Game? = null
     override val fieldSize: Point2D
         get() {
             val fieldSize = game?.level?.fieldSize

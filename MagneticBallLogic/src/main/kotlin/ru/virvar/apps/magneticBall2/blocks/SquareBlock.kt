@@ -2,7 +2,7 @@
 
 import ru.virvar.apps.magneticBallCore.*
 
-public open class SquareBlock : ActiveBlock() {
+open class SquareBlock : ActiveBlock() {
     override fun blockEnter(level: Level, block: Block, direction: Point2D): Point2D {
         var newPosition = Point2D(x, y)
         val reverseDirection = Point2D(-direction.x, -direction.y)
@@ -18,7 +18,7 @@ public open class SquareBlock : ActiveBlock() {
     }
 
     override fun initFrom(original: Block) {
-        super<ActiveBlock>.initFrom(original)
+        super.initFrom(original)
         if (original !is SquareBlock) {
             throw TypeCastException("Original must be SquareBlock")
         }

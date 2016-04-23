@@ -3,19 +3,19 @@ package ru.virvar.apps.magneticBallCore
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
-public class Game (
-        public val levelGenerator: ILevelGenerator,
-        public val blocksGenerator: IBlocksGenerator,
-        public val turnHandler: ITurnHandler) {
+class Game(
+        val levelGenerator: ILevelGenerator,
+        val blocksGenerator: IBlocksGenerator,
+        val turnHandler: ITurnHandler) {
     private var updateThread: Thread by Delegates.notNull()
     private var updateInterval: Long = 200
 
-    public var level: Level? = null
+    var level: Level? = null
         private set
-    public var blocksToDraw: List<Block>? = null
+    var blocksToDraw: List<Block>? = null
         private set
 
-    public fun start() {
+    fun start() {
         updateThread = thread(start = true) {
             startUpdate()
         }
@@ -32,7 +32,7 @@ public class Game (
         }
     }
 
-    public fun nextLevel() {
+    fun nextLevel() {
         val level = levelGenerator.generate()
         level.score = 0
         level.gameState = ru.virvar.apps.magneticBallCore.GameState.PROCESS
@@ -41,18 +41,18 @@ public class Game (
         this.level = level
     }
 
-    public fun resetLevel() {
+    fun resetLevel() {
         // todo: Implement level reset logic.
         // temp:
         nextLevel()
     }
 
-    public fun turn(direction: Point2D) {
+    fun turn(direction: Point2D) {
         turnHandler.turn(level!!, direction)
         blocksGenerator.generateBlocks(level!!)
     }
 
-    public fun stop() {
+    fun stop() {
         updateThread.interrupt()
     }
 }

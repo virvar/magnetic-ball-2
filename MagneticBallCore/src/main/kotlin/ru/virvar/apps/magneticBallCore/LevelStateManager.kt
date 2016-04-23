@@ -7,12 +7,12 @@ class LevelStateManager {
     private val actions: LinkedList<GameAction>
     private val levelState: LevelState
 
-    {
+    init {
         levelState = LevelState()
         actions = LinkedList<GameAction>()
     }
 
-    public fun nextState(updateInterval: Long): List<Block> {
+    fun nextState(updateInterval: Long): List<Block> {
         var action: GameAction? = null
         synchronized (actionsLocker) {
             if (actions.size != 0) {
@@ -31,19 +31,19 @@ class LevelStateManager {
         return blocks!!
     }
 
-    public fun addAction(action: GameAction) {
+    fun addAction(action: GameAction) {
         synchronized (actionsLocker) {
             actions.add(action)
         }
     }
 
-    public fun addActions(actions: Collection<GameAction>) {
+    fun addActions(actions: Collection<GameAction>) {
         synchronized (actionsLocker) {
             this.actions.addAll(actions)
         }
     }
 
-    public fun getActions(): List<GameAction>? {
+    fun getActions(): List<GameAction>? {
         var actions: List<GameAction>? = null
         synchronized (actionsLocker) {
             actions = this.actions.toList()

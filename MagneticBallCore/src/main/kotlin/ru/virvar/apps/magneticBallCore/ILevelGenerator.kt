@@ -1,5 +1,5 @@
 package ru.virvar.apps.magneticBallCore
 
-public trait ILevelGenerator {
+interface  ILevelGenerator {
     fun generate(): Level
 }

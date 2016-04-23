@@ -1,18 +1,18 @@
 package ru.virvar.apps.magneticBallCore
 
-import java.util.HashMap
+import java.util.*
 
 class LevelState {
     val blocks = HashMap<Int, Block>()
 
     internal fun addBlock(block: Block) {
-        assert (!blocks.values().any({ b -> b.location == block.location }), "The cell to add is not empty.")
-        assert(!blocks.containsKey(block.id), "There already is block with that Id.")
+        assert(!blocks.values.any({ b -> b.location == block.location }), { "The cell to add is not empty." })
+        assert(!blocks.containsKey(block.id), { "There already is block with that Id." })
         blocks.put(block.id, block)
     }
 
     internal fun removeBlock(blockId: Int) {
-        assert(blocks.containsKey(blockId), "There is no block with id to remove.")
+        assert(blocks.containsKey(blockId), { "There is no block with id to remove." })
         blocks.remove(blockId)
     }
 
@@ -23,6 +23,6 @@ class LevelState {
     }
 
     internal fun getBlocks(): List<Block> {
-        return blocks.values().toList()
+        return blocks.values.toList()
     }
 }

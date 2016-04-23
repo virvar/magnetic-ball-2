@@ -1,6 +1,6 @@
 package ru.virvar.apps.magneticBallCore
 
-public trait IBlocksGenerator {
+interface IBlocksGenerator {
     fun generateInitialBlocks(level: Level)
     fun generateBlocks(level: Level)
 }

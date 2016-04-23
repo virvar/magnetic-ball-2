@@ -1,21 +1,11 @@
 package ru.virvar.apps.magneticBallDrawing
 
-import java.awt.Graphics
-import ru.virvar.apps.magneticBallCore.Point2D
+import ru.virvar.apps.magneticBall2.blocks.*
 import ru.virvar.apps.magneticBallCore.Block
-import ru.virvar.apps.magneticBall2.blocks.Player
-import ru.virvar.apps.magneticBall2.blocks.TriangleBlock
-import java.awt.Point
-import java.awt.Polygon
-import ru.virvar.apps.magneticBall2.blocks.SquareBlock
-import ru.virvar.apps.magneticBall2.blocks.TargetBlock
-import ru.virvar.apps.magneticBall2.blocks.PortalBlock
-import ru.virvar.apps.magneticBall2.blocks.PointBlock
-import java.awt.Graphics2D
-import java.awt.BasicStroke
-import java.awt.Color
+import ru.virvar.apps.magneticBallCore.Point2D
+import java.awt.*
 
-public class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolean) : Drawer {
+class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolean) : Drawer {
     private val pointerArcAngleInDegrees = 10
     private val visibleFieldSize = Point2D(5, 5)
 
@@ -28,16 +18,16 @@ public class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolea
     protected var blockHeight: Int
         private set
 
-    {
-        $offsetX = 0
-        $offsetY = 0
-        $blockWidth = 0
-        $blockHeight = 0
+    init {
+        offsetX = 0
+        offsetY = 0
+        blockWidth = 0
+        blockHeight = 0
     }
 
     override fun draw(g: Graphics, width: Int, height: Int, fieldSize: Point2D, blocks: List<Block>) {
         calcOffsetAndBlockSize(width, height)
-        g.setColor(pallet.fieldBrush)
+        g.color = pallet.fieldBrush
         g.fillRect(offsetX, offsetY, width - offsetX * 2, height - offsetY * 2)
         val playerLocation = blocks.firstOrNull() { block -> block is Player }?.location
         if (playerLocation != null) {
@@ -60,11 +50,11 @@ public class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolea
         blockY += if (blockY < 0) fieldSize.y else if (blockY >= fieldSize.y) -fieldSize.y else 0
         when (block) {
             is Player -> {
-                g.setColor(pallet.playerBlockBrush)
+                g.color = pallet.playerBlockBrush
                 g.fillRect(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1, blockWidth - 2, blockHeight - 2)
             }
             is TriangleBlock -> {
-                var direction = (block as TriangleBlock).reflectionDirection
+                var direction = block.reflectionDirection
                 val points = arrayListOf(
                         Point(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1),
                         Point(offsetX + blockWidth * blockX + 1 + blockWidth - 2, offsetY + blockHeight * blockY + 1),
@@ -72,36 +62,36 @@ public class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolea
                         Point(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1 + blockHeight - 2))
                 when (direction) {
                     TriangleBlock.ReflectionDirection.UP_RIGHT ->
-                        points.remove(1)
+                        points.removeAt(1)
                     TriangleBlock.ReflectionDirection.BOTTOM_RIGHT ->
-                        points.remove(2)
+                        points.removeAt(2)
                     TriangleBlock.ReflectionDirection.BOTTOM_LEFT ->
-                        points.remove(3)
+                        points.removeAt(3)
                     TriangleBlock.ReflectionDirection.UP_LEFT ->
-                        points.remove(0)
+                        points.removeAt(0)
                 }
                 var polygon = Polygon()
                 for (point in points) {
                     polygon.addPoint(point.x, point.y)
                 }
-                g.setColor(pallet.triangleBlockBrush)
+                g.color = pallet.triangleBlockBrush
                 g.fillPolygon(polygon)
             }
             is SquareBlock -> {
-                g.setColor(pallet.squareBlockBrush)
+                g.color = pallet.squareBlockBrush
                 g.fillRect(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1, blockWidth - 2, blockHeight - 2)
             }
             is TargetBlock -> {
-                g.setColor(pallet.targetBlockBrush)
+                g.color = pallet.targetBlockBrush
                 g.fillRect(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1, blockWidth - 2, blockHeight - 2)
             }
             is PortalBlock -> {
-                val brush = pallet.portalBrushes[(block as PortalBlock).groupId]
-                g.setColor(brush)
+                val brush = pallet.portalBrushes[block.groupId]
+                g.color = brush
                 g.fillRect(offsetX + blockWidth * blockX + 1, offsetY + blockHeight * blockY + 1, blockWidth - 2, blockHeight - 2)
             }
             is PointBlock -> {
-                g.setColor(pallet.pointBlockBrush)
+                g.color = pallet.pointBlockBrush
                 g.fillRect(offsetX + blockWidth * blockX + 2, offsetY + blockHeight * blockY + 2, blockWidth - 4, blockHeight - 4)
             }
         }
@@ -122,8 +112,8 @@ public class FixedPlayerDrawer(val pallet: Pallet, val isPointersVisible: Boolea
             else ->
                 throw Exception("Unexpected block type")
         }
-        g2.setColor(Color(color.getRed(), color.getGreen(), color.getBlue(), 100))
-        g2.setStroke(BasicStroke(30F))
+        g2.color = Color(color.getRed(), color.getGreen(), color.getBlue(), 100)
+        g2.stroke = BasicStroke(30F)
         val blockCenter = Point2D((offsetX + blockWidth * (blockX + 0.5F)).toInt(),
                 (offsetY + blockHeight * (blockY + 0.5F)).toInt())
         val center = Point2D((offsetX + blockWidth * (visibleFieldSize.x.toFloat() / 2)).toInt(),

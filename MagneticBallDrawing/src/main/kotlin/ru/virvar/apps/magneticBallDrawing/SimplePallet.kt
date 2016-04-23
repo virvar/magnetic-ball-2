@@ -1,19 +1,19 @@
 package ru.virvar.apps.magneticBallDrawing
 
 import java.awt.Color
-import java.util.HashMap
+import java.util.*
 
-public class SimplePallet : Pallet {
-    public override val fieldBrush: Color = Color.white
-    public override val squareBlockBrush: Color = Color(0x6495ED)
-    public override val playerBlockBrush: Color = Color.RED
-    public override val triangleBlockBrush: Color = Color.GREEN
-    public override val targetBlockBrush: Color = Color.CYAN
-    public override val pointBlockBrush: Color = Color(0xADFF2F)
-    public override val portalBrushes: Map<Char, Color>
-    public override val gridPen: Color = Color.GRAY
+class SimplePallet : Pallet {
+    override val fieldBrush: Color = Color.white
+    override val squareBlockBrush: Color = Color(0x6495ED)
+    override val playerBlockBrush: Color = Color.RED
+    override val triangleBlockBrush: Color = Color.GREEN
+    override val targetBlockBrush: Color = Color.CYAN
+    override val pointBlockBrush: Color = Color(0xADFF2F)
+    override val portalBrushes: Map<Char, Color>
+    override val gridPen: Color = Color.GRAY
 
-    {
+    init {
         portalBrushes = getPortalBrushes()
     }
 

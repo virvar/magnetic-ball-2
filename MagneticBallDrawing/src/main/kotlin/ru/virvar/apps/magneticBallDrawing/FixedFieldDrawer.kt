@@ -1,18 +1,13 @@
 package ru.virvar.apps.magneticBallDrawing
 
+import ru.virvar.apps.magneticBall2.blocks.*
+import ru.virvar.apps.magneticBallCore.Block
+import ru.virvar.apps.magneticBallCore.Point2D
 import java.awt.Graphics
 import java.awt.Point
 import java.awt.Polygon
-import ru.virvar.apps.magneticBallCore.Point2D
-import ru.virvar.apps.magneticBallCore.Block
-import ru.virvar.apps.magneticBall2.blocks.Player
-import ru.virvar.apps.magneticBall2.blocks.TriangleBlock
-import ru.virvar.apps.magneticBall2.blocks.SquareBlock
-import ru.virvar.apps.magneticBall2.blocks.TargetBlock
-import ru.virvar.apps.magneticBall2.blocks.PortalBlock
-import ru.virvar.apps.magneticBall2.blocks.PointBlock
 
-public class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : Drawer {
+class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : Drawer {
     protected var offsetX: Int
         private set
     protected var offsetY: Int
@@ -22,16 +17,16 @@ public class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : 
     protected var blockHeight: Int
         private set
 
-    {
-        $offsetX = 0
-        $offsetY = 0
-        $blockWidth = 0
-        $blockHeight = 0
+    init {
+        offsetX = 0
+        offsetY = 0
+        blockWidth = 0
+        blockHeight = 0
     }
 
     override fun draw(g: Graphics, width: Int, height: Int, fieldSize: Point2D, blocks: List<Block>) {
         calcOffsetAndBlockSize(width, height, fieldSize)
-        g.setColor(pallet.fieldBrush)
+        g.color = pallet.fieldBrush
         g.fillRect(offsetX, offsetY, width - offsetX * 2, height - offsetY * 2)
         if (isGridVisible) {
             drawGrid(g, width, height, fieldSize)
@@ -42,7 +37,7 @@ public class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : 
     }
 
     private fun drawGrid(g: Graphics, width: Int, height: Int, fieldSize: Point2D) {
-        g.setColor(pallet.gridPen)
+        g.color = pallet.gridPen
         for (col in 0..fieldSize.x - 1) {
             g.drawLine(offsetX + blockWidth * col, offsetY, offsetX + blockWidth * col, height - offsetY)
         }
@@ -55,11 +50,11 @@ public class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : 
     protected fun drawBlock(g: Graphics, block: Block) {
         when (block) {
             is Player -> {
-                g.setColor(pallet.playerBlockBrush)
+                g.color = pallet.playerBlockBrush
                 g.fillRect(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1, blockWidth - 2, blockHeight - 2)
             }
             is TriangleBlock -> {
-                var direction = (block as TriangleBlock).reflectionDirection
+                var direction = block.reflectionDirection
                 val points = arrayListOf(
                         Point(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1),
                         Point(offsetX + blockWidth * block.x + 1 + blockWidth - 2, offsetY + blockHeight * block.y + 1),
@@ -67,36 +62,36 @@ public class FixedFieldDrawer(val pallet: Pallet, val isGridVisible: Boolean) : 
                         Point(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1 + blockHeight - 2))
                 when (direction) {
                     TriangleBlock.ReflectionDirection.UP_RIGHT ->
-                        points.remove(1)
+                        points.removeAt(1)
                     TriangleBlock.ReflectionDirection.BOTTOM_RIGHT ->
-                        points.remove(2)
+                        points.removeAt(2)
                     TriangleBlock.ReflectionDirection.BOTTOM_LEFT ->
-                        points.remove(3)
+                        points.removeAt(3)
                     TriangleBlock.ReflectionDirection.UP_LEFT ->
-                        points.remove(0)
+                        points.removeAt(0)
                 }
                 var polygon = Polygon()
                 for (point in points) {
                     polygon.addPoint(point.x, point.y)
                 }
-                g.setColor(pallet.triangleBlockBrush)
+                g.color = pallet.triangleBlockBrush
                 g.fillPolygon(polygon)
             }
             is SquareBlock -> {
-                g.setColor(pallet.squareBlockBrush)
+                g.color = pallet.squareBlockBrush
                 g.fillRect(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1, blockWidth - 2, blockHeight - 2)
             }
             is TargetBlock -> {
-                g.setColor(pallet.targetBlockBrush)
+                g.color = pallet.targetBlockBrush
                 g.fillRect(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1, blockWidth - 2, blockHeight - 2)
             }
             is PortalBlock -> {
-                val brush = pallet.portalBrushes[(block as PortalBlock).groupId]
-                g.setColor(brush)
+                val brush = pallet.portalBrushes[block.groupId]
+                g.color = brush
                 g.fillRect(offsetX + blockWidth * block.x + 1, offsetY + blockHeight * block.y + 1, blockWidth - 2, blockHeight - 2)
             }
             is PointBlock -> {
-                g.setColor(pallet.pointBlockBrush)
+                g.color = pallet.pointBlockBrush
                 g.fillRect(offsetX + blockWidth * block.x + 2, offsetY + blockHeight * block.y + 2, blockWidth - 4, blockHeight - 4)
             }
         }

@@ -1,15 +1,13 @@
 package ru.virvar.apps.magneticBallCore
 
-import java.util.LinkedList
-import java.util.HashMap
-import java.util.ArrayList
+import java.util.*
 
-public class Field(val fieldSize: Int) {
+class Field(val fieldSize: Int) {
     private val field: Array<Array<LinkedList<Block>?>>
-    public val blocks: HashMap<Int, Block>
-    public val freeCells: ArrayList<Int>
+    val blocks: HashMap<Int, Block>
+    val freeCells: ArrayList<Int>
 
-    {
+    init {
         field = Array(fieldSize) { Array<LinkedList<Block>?>(fieldSize) { null } }
         blocks = HashMap<Int, Block>()
         val cellsCount: Int = fieldSize * fieldSize
@@ -19,26 +17,26 @@ public class Field(val fieldSize: Int) {
         }
     }
 
-    public fun getBlock(x: Int, y: Int, depth: Int): Block? {
+    fun getBlock(x: Int, y: Int, depth: Int): Block? {
         var block: Block? = null
         val cell = field[x][y]
         if (cell != null) {
             if (cell.size > depth) {
-                block = cell.elementAt(depth)
+                block = cell.get(depth)
             }
         }
         return block
     }
 
-    public fun isOutOfField(point: Point2D): Boolean {
+    fun isOutOfField(point: Point2D): Boolean {
         return (point.x < 0 ||
                 point.y < 0 ||
                 point.x >= fieldSize ||
                 point.y >= fieldSize)
     }
 
-    public fun addBlock(block: Block) {
-        assert(!blocks.containsKey(block.id), "There already is a block with that Id.")
+    fun addBlock(block: Block) {
+        assert(!blocks.containsKey(block.id), { "There already is a block with that Id." })
         if (field[block.x][block.y] == null) {
             field[block.x][block.y] = LinkedList<Block>()
         }
@@ -47,21 +45,21 @@ public class Field(val fieldSize: Int) {
         blocks.put(block.id, block)
     }
 
-    public fun removeBlock(block: Block) {
+    fun removeBlock(block: Block) {
         if (!isOutOfField(block.location)) {
             field[block.x][block.y]!!.remove(block)
             updateFreeCell(block.location)
         }
-        assert(blocks.containsKey(block.id), "There is no block with id to remove.")
+        assert(blocks.containsKey(block.id), { "There is no block with id to remove." })
         blocks.remove(block.id)
     }
 
-    public fun moveBlock(block: Block, newPosition: Point2D) {
+    fun moveBlock(block: Block, newPosition: Point2D) {
         field[block.x][block.y]!!.removeFirst()
         updateFreeCell(block.location)
         block.x = newPosition.x
         block.y = newPosition.y
-        assert(!isOutOfField(block.location), "Block is out of field.")
+        assert(!isOutOfField(block.location), { "Block is out of field." })
         if (field[block.x][block.y] == null) {
             field[block.x][block.y] = LinkedList<Block>()
         }

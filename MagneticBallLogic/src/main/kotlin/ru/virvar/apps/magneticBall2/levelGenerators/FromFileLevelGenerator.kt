@@ -7,23 +7,23 @@ import java.io.BufferedReader
 import java.io.FileReader
 import ru.virvar.apps.magneticBall2.blocks.*
 
-public class FromFileLevelGenerator (fileName: String, moveBehavior: IMoveBehavior) : ILevelGenerator {
+class FromFileLevelGenerator (fileName: String, moveBehavior: IMoveBehavior) : ILevelGenerator {
     private val fileName: String
     private val moveBehavior: IMoveBehavior
 
-    {
+    init {
         this.fileName = fileName
         this.moveBehavior = moveBehavior
     }
 
     override fun generate(): Level {
         val bReader = BufferedReader(FileReader(fileName))
-        val lines = bReader.lines().toList()
+        val lines = bReader.lines().toArray() //.asList<String>()
         var lineNumber = 0
         val portals = HashMap<Char, PortalBlock>()
-        val level = MagneticBallLevel(lines.first().length, moveBehavior)
+        val level = MagneticBallLevel((lines[0] as String).length, moveBehavior)
         for (line in lines) {
-            for (i in line.indices) {
+            for (i in (line as String).indices) {
                 val cellValue = line[i]
                 if (cellValue != '0') {
                     val block = createBlock(cellValue)
@@ -33,7 +33,7 @@ public class FromFileLevelGenerator (fileName: String, moveBehavior: IMoveBehavi
                     if (block is Player) {
                         level.player = block
                     } else if (block is PortalBlock) {
-                        val portal = block as PortalBlock
+                        val portal = block
                         if (portals.containsKey(portal.groupId)) {
                             portal.portalEnd = portals[portal.groupId]
                             portals[portal.groupId]!!.portalEnd = portal

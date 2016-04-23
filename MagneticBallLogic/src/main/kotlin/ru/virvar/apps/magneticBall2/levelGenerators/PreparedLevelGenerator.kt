@@ -5,12 +5,12 @@ import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.MagneticBallLevel
 import ru.virvar.apps.magneticBall2.blocks.*
 
-public class PreparedLevelGenerator(fieldSize: Int, blocks: List<Block>, moveBehavior: IMoveBehavior) : ILevelGenerator {
+class PreparedLevelGenerator(fieldSize: Int, blocks: List<Block>, moveBehavior: IMoveBehavior) : ILevelGenerator {
     private val fieldSize: Int
     private val blocks: List<Block>
     private val moveBehavior: IMoveBehavior
 
-    {
+    init {
         this.fieldSize = fieldSize
         this.blocks = blocks
         this.moveBehavior = moveBehavior
@@ -25,7 +25,7 @@ public class PreparedLevelGenerator(fieldSize: Int, blocks: List<Block>, moveBeh
             if (blockCopy is Player) {
                 level.player = blockCopy
             } else if (blockCopy is PortalBlock) {
-                val portal = blockCopy as PortalBlock
+                val portal = blockCopy
                 if (portals.containsKey(portal.groupId)) {
                     portal.portalEnd = portals[portal.groupId]
                     portals[portal.groupId]!!.portalEnd = portal

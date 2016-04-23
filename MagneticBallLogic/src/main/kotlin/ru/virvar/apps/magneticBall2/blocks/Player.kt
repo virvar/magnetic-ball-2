@@ -3,11 +3,11 @@
 import ru.virvar.apps.magneticBallCore.Block
 import ru.virvar.apps.magneticBallCore.Point2D
 
-public class Player : Block() {
+class Player : Block() {
     // not used yet
-    public var direction: ru.virvar.apps.magneticBallCore.Point2D
+    var direction: ru.virvar.apps.magneticBallCore.Point2D
 
-    {
+    init {
         direction = Point2D(0, 0)
     }
 
@@ -18,7 +18,7 @@ public class Player : Block() {
     }
 
     override fun initFrom(original: Block) {
-        super<Block>.initFrom(original)
+        super.initFrom(original)
         if (original !is Player) {
             throw TypeCastException("Original must be Player")
         }

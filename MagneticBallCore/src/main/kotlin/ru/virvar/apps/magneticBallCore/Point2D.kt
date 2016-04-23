@@ -1,7 +1,7 @@
 package ru.virvar.apps.magneticBallCore
 
-public data class Point2D(public var x: Int = 0, public var y: Int = 0) {
-    public fun isEmpty(): Boolean {
+data class Point2D(var x: Int = 0, var y: Int = 0) {
+    fun isEmpty(): Boolean {
         return (x == 0) && (y == 0)
     }
 }

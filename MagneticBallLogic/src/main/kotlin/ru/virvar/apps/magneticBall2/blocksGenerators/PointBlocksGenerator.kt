@@ -1,17 +1,14 @@
 ﻿package ru.virvar.apps.magneticBall2.blocksGenerators
 
-import java.util.Random
-import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.blocks.PointBlock
+import ru.virvar.apps.magneticBallCore.IBlocksGenerator
+import ru.virvar.apps.magneticBallCore.Level
+import ru.virvar.apps.magneticBallCore.Point2D
 
-public class PointBlocksGenerator : IBlocksGenerator {
-    private class object {
-        val random = Random()
-    }
+class PointBlocksGenerator : IBlocksGenerator {
+    val pointBlocksCountMax: Int
 
-    public val pointBlocksCountMax: Int
-
-    {
+    init {
         pointBlocksCountMax = 1
     }
 
@@ -34,7 +31,7 @@ public class PointBlocksGenerator : IBlocksGenerator {
 
     private fun getPointBlocksOnFieldCount(level: Level): Int {
         var count = 0
-        for (block in level.blocks.values()) {
+        for (block in level.blocks.values) {
             if (block is PointBlock) {
                 count++
             }

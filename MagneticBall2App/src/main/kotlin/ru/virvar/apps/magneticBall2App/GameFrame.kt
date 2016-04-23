@@ -1,26 +1,24 @@
 package ru.virvar.apps.magneticBall2App
 
-import javax.swing.JFrame
-import java.awt.Color
-import java.awt.Graphics
-import java.awt.event.KeyListener
-import java.awt.event.KeyEvent
-import java.awt.event.WindowEvent
-import java.awt.event.WindowAdapter
 import ru.virvar.apps.magneticBallCore.Game
 import ru.virvar.apps.magneticBallCore.GameState
 import ru.virvar.apps.magneticBallCore.Point2D
 import ru.virvar.apps.magneticBallDrawing.Drawer
+import java.awt.Graphics
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
+import javax.swing.JFrame
 import kotlin.concurrent.thread
 
-public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
+class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
     private val drawInterval = 100L
     private var drawingThread: Thread? = null
     private val panel: GamePanel
-    private val backColor = Color.BLACK
     private var keyReleased = true
 
-    {
+    init {
         initUi()
         panel = GamePanel(drawer)
         panel.game = game
@@ -29,17 +27,16 @@ public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
 
     private fun initUi() {
         setBounds(100, 100, 600, 600)
-        //        setBackground(backColor)
         addKeyListener(this)
         addWindowListener(object : WindowAdapter() {
             override fun windowClosing(e: WindowEvent) {
                 stop()
             }
         })
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     }
 
-    public fun start() {
+    fun start() {
         game.start()
         game.nextLevel()
         drawingThread = thread(start = true) { startDraw() }
@@ -54,8 +51,8 @@ public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
     }
 
     override fun paint(g: Graphics) {
-        super<JFrame>.paint(g)
-        this.setTitle("Score: ${game.level?.score}")
+        super.paint(g)
+        this.title = "Score: ${game.level?.score}"
     }
 
     override fun keyTyped(e: KeyEvent) {
@@ -65,7 +62,7 @@ public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
     override fun keyPressed(e: KeyEvent) {
         if (keyReleased) {
             keyReleased = false
-            if (e.getKeyCode() == KeyEvent.VK_Q) {
+            if (e.keyCode == KeyEvent.VK_Q) {
                 nextLevel()
                 return
             }
@@ -88,7 +85,7 @@ public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
 
     private fun processTurn(e: KeyEvent) {
         val course = Point2D(0, 0)
-        when (e.getKeyCode()) {
+        when (e.keyCode) {
             KeyEvent.VK_LEFT ->
                 course.x = -1
             KeyEvent.VK_RIGHT ->
@@ -116,9 +113,5 @@ public class GameFrame(val game: Game, drawer: Drawer) : JFrame(), KeyListener {
     private fun stop() {
         drawingThread?.interrupt()
         game.stop()
-    }
-
-    fun finalize() {
-        stop()
     }
 }

@@ -4,10 +4,10 @@ import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.MagneticBallLevel
 import ru.virvar.apps.magneticBall2.blocks.Player
 
-public class EmptyLevelGenerator (moveBehavior: IMoveBehavior) : ILevelGenerator {
+class EmptyLevelGenerator (moveBehavior: IMoveBehavior) : ILevelGenerator {
     private val moveBehavior: IMoveBehavior
 
-    {
+    init {
         this.moveBehavior = moveBehavior
     }
 

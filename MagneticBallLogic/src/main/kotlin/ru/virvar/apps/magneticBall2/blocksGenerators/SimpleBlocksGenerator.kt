@@ -1,18 +1,14 @@
 ﻿package ru.virvar.apps.magneticBall2.blocksGenerators
 
-import java.util.Random
-import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.blocks.SquareBlock
+import ru.virvar.apps.magneticBallCore.IBlocksGenerator
+import ru.virvar.apps.magneticBallCore.Level
 
-public class SimpleBlocksGenerator : IBlocksGenerator {
-    private class object {
-        val random = Random()
-    }
+class SimpleBlocksGenerator : IBlocksGenerator {
+    val initBlocksCount: Int
+    val blocksCountPerTurn: Int
 
-    public val initBlocksCount: Int
-    public val blocksCountPerTurn: Int
-
-    {
+    init {
         initBlocksCount = 10
         blocksCountPerTurn = 1
     }

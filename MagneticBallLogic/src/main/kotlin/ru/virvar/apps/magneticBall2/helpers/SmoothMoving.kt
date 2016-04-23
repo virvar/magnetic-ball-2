@@ -2,7 +2,7 @@
 
 import ru.virvar.apps.magneticBallCore.*
 
-public class SmoothMoving : IMoveHelper {
+class SmoothMoving : IMoveHelper {
     override fun move(level: Level, block: Block, direction: Point2D, newPosition: Point2D) {
         val prevPos = Point2D(block.x, block.y)
         val nextPos = Point2D(block.x, block.y)

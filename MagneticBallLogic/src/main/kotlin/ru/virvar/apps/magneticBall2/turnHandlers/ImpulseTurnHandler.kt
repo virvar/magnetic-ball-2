@@ -4,7 +4,7 @@ import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.blocks.ActiveBlock
 import ru.virvar.apps.magneticBall2.MagneticBallLevel
 
-public class ImpulseTurnHandler : ITurnHandler {
+class ImpulseTurnHandler : ITurnHandler {
     private var handleBlockCallDepth: Int = 0
     private val handleBlockCallDepthMax = 100
 

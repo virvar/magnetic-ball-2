@@ -1,21 +1,22 @@
 ﻿package ru.virvar.apps.magneticBall2.blocks
 
-import ru.virvar.apps.magneticBallCore.*
-import ru.virvar.apps.magneticBall2.blocks.TriangleBlock.ReflectionDirection
+import ru.virvar.apps.magneticBallCore.Block
+import ru.virvar.apps.magneticBallCore.Level
+import ru.virvar.apps.magneticBallCore.Point2D
 
-public class TriangleBlock(direction: ReflectionDirection) : SquareBlock() {
-    public var reflectionDirection: ReflectionDirection
+class TriangleBlock(direction: ReflectionDirection) : SquareBlock() {
+    var reflectionDirection: ReflectionDirection
         private set
 
-    {
-        $reflectionDirection = direction
+    init {
+        reflectionDirection = direction
     }
 
     override fun blockEnter(level: Level, block: Block, direction: Point2D): Point2D {
         // There must be free cells or another triangles on both sides of this triangle,
         // else this shouldn't be triangle. Consequence: can move from triangle at all directions.
         // There must not be cycles.
-        super<SquareBlock>.blockEnter(level, block, direction)
+        super.blockEnter(level, block, direction)
         val newDirection = Point2D(0, 0)
         when (reflectionDirection) {
             ReflectionDirection.UP_RIGHT -> {
@@ -61,17 +62,17 @@ public class TriangleBlock(direction: ReflectionDirection) : SquareBlock() {
     }
 
     override fun initFrom(original: Block) {
-        super<SquareBlock>.initFrom(original)
+        super.initFrom(original)
         if (original !is TriangleBlock) {
             throw TypeCastException("Original must be TriangleBlock")
         }
         this.reflectionDirection = original.reflectionDirection
     }
 
-    public enum class ReflectionDirection {
-        UP_RIGHT
-        BOTTOM_RIGHT
-        BOTTOM_LEFT
-        UP_LEFT
+    enum class ReflectionDirection {
+        UP_RIGHT,
+        BOTTOM_RIGHT,
+        BOTTOM_LEFT,
+        UP_LEFT,
     }
 }

@@ -1,17 +1,15 @@
 ﻿package ru.virvar.apps.magneticBall2.blocksGenerators
 
-import java.util.LinkedList
-import java.util.Random
-import ru.virvar.apps.magneticBallCore.*
 import ru.virvar.apps.magneticBall2.MagneticBallLevel
 import ru.virvar.apps.magneticBall2.blocks.SquareBlock
 import ru.virvar.apps.magneticBall2.blocks.TriangleBlock
+import ru.virvar.apps.magneticBallCore.Block
+import ru.virvar.apps.magneticBallCore.IBlocksGenerator
+import ru.virvar.apps.magneticBallCore.Level
+import ru.virvar.apps.magneticBallCore.Point2D
+import java.util.*
 
-public class OnLineBlocksGenerator(val blocksCount: Int = 20) : IBlocksGenerator {
-    private class object {
-        val random = Random()
-    }
-
+class OnLineBlocksGenerator(val blocksCount: Int = 20) : IBlocksGenerator {
     override fun generateInitialBlocks(level: Level) {
         generateBlocks(level, blocksCount)
     }
@@ -54,7 +52,7 @@ public class OnLineBlocksGenerator(val blocksCount: Int = 20) : IBlocksGenerator
                 onLineFreeCells.add(Point2D(player.x, i))
             }
         }
-        for (i in 0..level.fieldSize - 1 ) {
+        for (i in 0..level.fieldSize - 1) {
             if (level.getBlock(i, player.y) == null) {
                 onLineFreeCells.add(Point2D(i, player.y))
             }

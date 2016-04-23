@@ -6,7 +6,7 @@ class AddAction (block: Block) : GameAction(block.id) {
     override val delay: Long = 10
     private val blockCopy: Block
 
-    {
+    init {
         blockCopy = block.clone()
     }
 
